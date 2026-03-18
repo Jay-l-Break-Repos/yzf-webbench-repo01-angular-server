@@ -29,4 +29,8 @@ fi
 cd src
 npx ng build --configuration development
 
-exec serve -s dist/angular -l 5173
+if [ -d dist/angular/browser ]; then
+  exec serve -s dist/angular/browser -l 5173
+else
+  exec serve -s dist/angular -l 5173
+fi

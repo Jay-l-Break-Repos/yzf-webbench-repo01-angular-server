@@ -1,7 +1,11 @@
 {
   "name": "angular",
   "version": "0.0.1",
-  "scripts": {},
+  "scripts": {
+    "start": "ng serve --port 5173 --host 0.0.0.0",
+    "build": "ng build",
+    "dev": "ng serve --port 5173 --host 0.0.0.0"
+  },
   "author": "maoyiwei.ebay",
   "dependencies": {
     "@angular/animations": "^19.0.0",
