@@ -3,14 +3,22 @@ set -eu
 
 cd /app
 
-if [ ! -d src ] && [ -d app ]; then
-  cp -a app src
+# If dist doesn't have index.html (build failed), rebuild
+if [ ! -f dist/index.html ]; then
+  if [ -d app ]; then
+    cd /app/app
+    npm install
+    npx ng build --configuration=production
+    mkdir -p /app/dist
+    cp -r dist/angular/browser/* /app/dist/ 2>/dev/null || cp -r dist/angular/* /app/dist/ 2>/dev/null || true
+    cd /app
+  fi
 fi
 
-mkdir -p src
-
-if [ ! -f src/index.html ]; then
-  cat > src/index.html <<'EOF'
+# Final fallback
+if [ ! -f dist/index.html ]; then
+  mkdir -p dist
+  cat > dist/index.html <<'EOF'
 <!doctype html>
 <html>
   <head>
