@@ -3,14 +3,20 @@ set -eu
 
 cd /app
 
-if [ ! -d src ] && [ -d app ]; then
-  cp -a app src
-fi
+# The Angular app was built during Docker image build
+# Output is in /app/app/dist/angular/browser (Angular 19 application builder)
 
-mkdir -p src
-
-if [ ! -f src/index.html ]; then
-  cat > src/index.html <<'EOF'
+# Determine the correct dist directory to serve
+if [ -d /app/app/dist/angular/browser ]; then
+  SERVE_DIR="/app/app/dist/angular/browser"
+elif [ -d /app/app/dist/angular ]; then
+  SERVE_DIR="/app/app/dist/angular"
+elif [ -d /app/app/dist ]; then
+  SERVE_DIR="/app/app/dist"
+else
+  # Fallback: create a minimal index.html
+  mkdir -p /app/dist
+  cat > /app/dist/index.html <<'EOF'
 <!doctype html>
 <html>
   <head>
@@ -23,22 +29,10 @@ if [ ! -f src/index.html ]; then
   </body>
 </html>
 EOF
+  SERVE_DIR="/app/dist"
 fi
 
-# Make node_modules available in the src directory for the Angular build
-if [ -d /app/node_modules ] && [ ! -d /app/src/node_modules ]; then
-  ln -s /app/node_modules /app/src/node_modules
-fi
+echo "Serving from: $SERVE_DIR"
+ls -la "$SERVE_DIR"
 
-# Build the Angular application from the src directory (where angular.json lives)
-cd /app/src
-npx ng build --configuration=production 2>&1
-
-# The Angular application builder outputs to dist/angular/browser
-if [ -d /app/src/dist/angular/browser ]; then
-  exec serve -s /app/src/dist/angular/browser -l 5173
-elif [ -d /app/src/dist/angular ]; then
-  exec serve -s /app/src/dist/angular -l 5173
-else
-  exec serve -s /app/src/dist -l 5173
-fi
+exec serve -s "$SERVE_DIR" -l 5173
