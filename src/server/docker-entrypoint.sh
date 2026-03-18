@@ -27,10 +27,4 @@ EOF
 fi
 
 cd src
-npx ng build --configuration development
-
-if [ -d dist/angular/browser ]; then
-  exec serve -s dist/angular/browser -l 5173
-else
-  exec serve -s dist/angular -l 5173
-fi
+exec npx ng serve --port 5173 --host 0.0.0.0 --configuration development
