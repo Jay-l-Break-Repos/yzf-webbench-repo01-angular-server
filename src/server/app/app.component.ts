@@ -1,9 +1,13 @@
 import { Component } from '@angular/core'
+import { HeaderComponent } from './header/header.component'
 
 @Component({
   selector: 'app-root',
-  imports: [],
-  template: ` <main class="main">Empty</main> `,
+  imports: [HeaderComponent],
+  template: `
+    <app-header />
+    <main class="main"></main>
+  `,
   styles: `
     body {
       margin: 0;
