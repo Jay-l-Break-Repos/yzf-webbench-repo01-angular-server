@@ -25,4 +25,20 @@ if [ ! -f src/index.html ]; then
 EOF
 fi
 
-exec serve -s dist -l 5173
+# Make node_modules available in the src directory for the Angular build
+if [ -d /app/node_modules ] && [ ! -d /app/src/node_modules ]; then
+  ln -s /app/node_modules /app/src/node_modules
+fi
+
+# Build the Angular application from the src directory (where angular.json lives)
+cd /app/src
+npx ng build --configuration=production 2>&1
+
+# The Angular application builder outputs to dist/angular/browser
+if [ -d /app/src/dist/angular/browser ]; then
+  exec serve -s /app/src/dist/angular/browser -l 5173
+elif [ -d /app/src/dist/angular ]; then
+  exec serve -s /app/src/dist/angular -l 5173
+else
+  exec serve -s /app/src/dist -l 5173
+fi
