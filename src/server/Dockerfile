@@ -9,13 +9,12 @@ RUN npm install
 
 COPY . .
 
-# Symlink node_modules into the Angular source directory
-RUN ln -s /app/node_modules /app/app/node_modules
-
-# Build Angular app at image build time
-# Use || true so the Docker build doesn't fail if ng build has issues
-RUN cd /app/app && npx ng build --configuration=production || echo "Build failed, will retry at runtime"
+# Pre-build: copy app source to src, symlink node_modules, build
+RUN cp -a app src && \
+    ln -s /app/node_modules /app/src/node_modules && \
+    cd /app/src && \
+    npx ng build --configuration=production
 
 EXPOSE 5173
 
-CMD ["sh", "/app/docker-entrypoint.sh"]
+CMD ["serve", "-s", "/app/src/dist/angular/browser", "-l", "5173"]
