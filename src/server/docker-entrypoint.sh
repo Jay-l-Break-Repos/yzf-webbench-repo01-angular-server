@@ -9,4 +9,6 @@ if [ ! -d src ] && [ -d app ]; then
 fi
 
 cd src
-exec npx ng serve --host 0.0.0.0 --port 5173
+npx ng build
+cd /app
+exec serve -s src/dist/angular/browser -l 5173
