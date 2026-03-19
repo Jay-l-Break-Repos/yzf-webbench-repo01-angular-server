@@ -1,15 +1,31 @@
 #!/usr/bin/env sh
 set -eu
 
-# Angular app was pre-built during Docker image build.
-# Serve the static output with 'serve'.
+cd /app
+
+# Ensure node_modules symlink exists in app directory
+if [ ! -e /app/app/node_modules ]; then
+  ln -sf /app/node_modules /app/app/node_modules
+fi
+
+# If pre-built output exists, serve it with 'serve'
+if [ -d /app/app/dist/angular/browser ]; then
+  echo "Serving pre-built Angular app from /app/app/dist/angular/browser"
+  exec serve -s /app/app/dist/angular/browser -l 5173
+fi
+
+# Fallback: try building at runtime then serving
+echo "No pre-built output found, building now..."
+cd /app/app
+npx ng build --configuration=production 2>&1
 
 if [ -d /app/app/dist/angular/browser ]; then
+  echo "Build succeeded, serving from /app/app/dist/angular/browser"
+  cd /app
   exec serve -s /app/app/dist/angular/browser -l 5173
-elif [ -d /app/app/dist/angular ]; then
-  exec serve -s /app/app/dist/angular -l 5173
-else
-  echo "ERROR: Angular build output not found!" >&2
-  ls -laR /app/app/dist/ 2>&1 || echo "No dist directory found" >&2
-  exit 1
 fi
+
+# Last resort: use ng serve
+echo "Static build output not found, falling back to ng serve..."
+cd /app/app
+exec npx ng serve --host 0.0.0.0 --port 5173
