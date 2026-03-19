@@ -28,7 +28,7 @@ export class AppComponent {
 
   blogs: BlogEntry[] = [
     { title: 'Morning', detail: 'Morning My Friends' },
-    { title: 'Travel', detail: 'Travel The World' },
+    { title: 'Travel', detail: 'I love traveling!' },
   ]
 
   selectedBlog: BlogEntry = this.blogs[0]

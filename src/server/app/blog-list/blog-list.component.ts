@@ -22,6 +22,7 @@ export interface BlogEntry {
       padding: 8px 0;
     }
     .list-item {
+      width: 300px;
       height: 40px;
       display: flex;
       align-items: center;
