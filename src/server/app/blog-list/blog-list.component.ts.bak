@@ -5,11 +5,13 @@ import { Blog } from '../model/blog';
   selector: 'app-blog-list',
   imports: [],
   template: `
-    @for (blog of blogs; track blog.id) {
-      <div class="list-item" (click)="selectBlog(blog)" [class.selected]="blog.id === selectedBlogId">
-        {{ blog.title }}
-      </div>
-    }
+    <ul>
+      @for (blog of blogs; track blog.id) {
+        <li (click)="selectBlog(blog)" [class.selected]="blog.id === selectedBlogId">
+          {{ blog.title }}
+        </li>
+      }
+    </ul>
   `,
   styles: ``,
 })
