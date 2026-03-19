@@ -11,7 +11,11 @@ import { BLOGS } from './mock-blogs'
   template: `
     <app-header></app-header>
     <main class="main">
-      <app-blog-list [blogs]="blogs"></app-blog-list>
+      <app-blog-list
+        [blogs]="blogs"
+        [selectedBlog]="selectedBlog"
+        (blogSelected)="onBlogSelected($event)"
+      ></app-blog-list>
       <app-blog [title]="selectedBlog.title" [detail]="selectedBlog.detail"></app-blog>
     </main>
   `,
@@ -30,4 +34,8 @@ export class AppComponent {
   title = 'angular'
   blogs: Blog[] = BLOGS
   selectedBlog: Blog = BLOGS[0]
+
+  onBlogSelected(blog: Blog): void {
+    this.selectedBlog = blog
+  }
 }
