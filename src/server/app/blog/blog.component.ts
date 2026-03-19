@@ -14,6 +14,7 @@ import { Component, Input } from '@angular/core'
       padding: 16px;
     }
     .blog-title {
+      width: fit-content;
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 8px;
