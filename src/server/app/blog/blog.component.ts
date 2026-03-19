@@ -1,10 +1,31 @@
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 @Component({
   selector: 'app-blog',
-  standalone: true,
   imports: [],
-  templateUrl: './blog.component.html',
-  styleUrl: './blog.component.css',
+  template: `
+    <div class="blog">
+      <div class="blog-title">{{ title }}</div>
+      <div class="blog-detail">{{ detail }}</div>
+    </div>
+  `,
+  styles: `
+    .blog {
+      padding: 16px;
+    }
+    .blog-title {
+      width: fit-content;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .blog-detail {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  `,
 })
-export class BlogComponent {}
+export class BlogComponent {
+  @Input() title = ''
+  @Input() detail = ''
+}
