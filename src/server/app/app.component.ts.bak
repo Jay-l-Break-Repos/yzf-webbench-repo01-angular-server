@@ -40,11 +40,10 @@ import { Blog } from './models/blog.model';
 export class AppComponent {
   title = 'angular';
   blogs: Blog[] = [];
-  selectedBlog!: Blog;
+  selectedBlog?: Blog;
 
   constructor(private blogService: BlogService) {
     this.blogs = this.blogService.getBlogs();
-    this.selectedBlog = this.blogs[0];
   }
 
   onBlogSelected(blog: Blog): void {
