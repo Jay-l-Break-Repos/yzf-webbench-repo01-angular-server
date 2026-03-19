@@ -5,9 +5,17 @@ import { Component } from '@angular/core'
   imports: [],
   template: `
     <header>
-      <p>header works!</p>
+      Hello Blog
     </header>
   `,
-  styles: ``,
+  styles: `
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 16px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  `,
 })
 export class HeaderComponent {}
