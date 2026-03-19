@@ -8,7 +8,7 @@ import { Blog } from '../../models/blog.model';
   template: `
     @if (blog) {
       <div class="blog">
-        <div class="blog-title">{{ blog.title }}</div>
+        <div class="blog-detail-title">{{ blog.title }}</div>
         <div class="blog-detail">{{ blog.detail }}</div>
       </div>
     } @else {
@@ -22,7 +22,7 @@ import { Blog } from '../../models/blog.model';
       .blog {
         padding: 10px;
       }
-      .blog-title {
+      .blog-detail-title {
         font-size: 1.5em;
         font-weight: bold;
         margin-bottom: 10px;
