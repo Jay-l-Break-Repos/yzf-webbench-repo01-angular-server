@@ -3,15 +3,15 @@ set -eu
 
 cd /app
 
-# The Angular app was pre-built during Docker image build.
-# Output is in /app/app/dist/angular/browser (Angular 19 application builder).
-
-if [ -d /app/app/dist/angular/browser ]; then
-  SERVE_DIR="/app/app/dist/angular/browser"
-elif [ -d /app/app/dist/angular ]; then
-  SERVE_DIR="/app/app/dist/angular"
-else
-  SERVE_DIR="/app/app/dist"
+# Copy starter code to working directory if not already present
+if [ ! -d src ] && [ -d app ]; then
+  cp -a app src
 fi
 
-exec serve -s "$SERVE_DIR" -l 5173
+# Symlink node_modules so Angular CLI can find dependencies
+if [ ! -d /app/src/node_modules ]; then
+  ln -s /app/node_modules /app/src/node_modules
+fi
+
+cd src
+exec npx ng serve --host 0.0.0.0 --port 5173
