@@ -20,10 +20,6 @@ import { BLOGS } from './mock-blogs'
     </main>
   `,
   styles: `
-    body {
-      margin: 0;
-      padding: 0;
-    }
     .main {
       display: flex;
       flex-direction: row;
