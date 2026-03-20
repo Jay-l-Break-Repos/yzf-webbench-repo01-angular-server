@@ -11,6 +11,9 @@ import { Component, Input } from '@angular/core'
     </div>
   `,
   styles: `
+    :host {
+      flex: 1;
+    }
     .blog {
       padding: 10px 20px;
     }
