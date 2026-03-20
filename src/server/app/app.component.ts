@@ -3,7 +3,7 @@ import { BlogListComponent } from './blog-list/blog-list.component'
 import { HeaderComponent } from './header/header.component'
 import { BlogComponent } from './blog/blog.component'
 import { Blog } from './blog'
-import { BLOGS } from './mock-blogs'
+import { BlogService } from './blog.service'
 
 @Component({
   selector: 'app-root',
@@ -32,8 +32,13 @@ import { BLOGS } from './mock-blogs'
 })
 export class AppComponent {
   title = 'angular'
-  blogs: Blog[] = BLOGS
-  selectedBlog: Blog = BLOGS[0]
+  blogs: Blog[] = []
+  selectedBlog!: Blog
+
+  constructor(private blogService: BlogService) {
+    this.blogs = this.blogService.getBlogs()
+    this.selectedBlog = this.blogs[0]
+  }
 
   onBlogSelected(blog: Blog): void {
     this.selectedBlog = blog
