@@ -20,10 +20,11 @@ import { Blog } from '../blog'
   `,
   styles: `
     .blog-list {
-      width: 200px;
+      width: 300px;
       float: left;
     }
     .list-item {
+      width: 300px;
       height: 40px;
       display: flex;
       align-items: center;
