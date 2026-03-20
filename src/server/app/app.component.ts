@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { BlogListComponent } from './blog-list/blog-list.component'
 import { HeaderComponent } from './header/header.component'
 import { BlogComponent } from './blog/blog.component'
@@ -7,6 +7,7 @@ import { BlogService } from './blog.service'
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [BlogListComponent, HeaderComponent, BlogComponent],
   template: `
     <app-header></app-header>
@@ -32,13 +33,9 @@ import { BlogService } from './blog.service'
 })
 export class AppComponent {
   title = 'angular'
-  blogs: Blog[] = []
-  selectedBlog!: Blog
-
-  constructor(private blogService: BlogService) {
-    this.blogs = this.blogService.getBlogs()
-    this.selectedBlog = this.blogs[0]
-  }
+  private blogService = inject(BlogService)
+  blogs: Blog[] = this.blogService.getBlogs()
+  selectedBlog: Blog = this.blogs[0]
 
   onBlogSelected(blog: Blog): void {
     this.selectedBlog = blog
