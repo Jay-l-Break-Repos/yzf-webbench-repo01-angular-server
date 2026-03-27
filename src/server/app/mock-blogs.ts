@@ -1,6 +1,6 @@
 import { Blog } from './blog'
 
 export const BLOGS: Blog[] = [
-  { title: 'Morning', detail: 'Morning My Friends' },
-  { title: 'Travel', detail: 'I love traveling!' },
+  { id: 1, title: 'Morning', detail: 'Morning My Friends' },
+  { id: 2, title: 'Travel', detail: 'I love traveling!' },
 ]
